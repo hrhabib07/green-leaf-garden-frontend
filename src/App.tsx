@@ -3,15 +3,15 @@ import Footer from "./components/footer/Footer";
 import Navbar from "./components/navbar/navbar";
 import ProductContainer from "./components/product/ProductContainer";
 import TopBanner from "./components/TopBanner/TopBanner";
-
 function App() {
   return (
-    <>
+    <div className="max-w-full lg:max-w-7xl mx-auto">
       <Navbar></Navbar>
       <TopBanner></TopBanner>
+      {/* <div>{data}</div> */}
       <ProductContainer></ProductContainer>
       <Footer></Footer>
-    </>
+    </div>
   );
 }
 

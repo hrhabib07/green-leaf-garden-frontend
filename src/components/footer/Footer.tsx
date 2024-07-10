@@ -1,7 +1,7 @@
 const Footer = () => {
   return (
     <div className="bg-gray-100 p-8 ">
-      <div className="flex items-center justify-between space-y-6 lg:space-y-0 lg:space-x-12">
+      <div className="flex flex-col-reverse md:flex-row items-center justify-between space-y-6 lg:space-y-0 lg:space-x-12">
         <div className="text-start flex-1 space-y-4">
           <h2 className="text-2xl font-bold text-gray-800">Contact Us</h2>
           <div className="flex items-center space-x-2 text-gray-600">
@@ -71,7 +71,7 @@ const Footer = () => {
           />
         </div>
 
-        <div className="flex-1 flex justify-center justify-center">
+        <div className="flex-1 flex justify-start md:justify-center items-start md:items-center">
           <div className="text-start ">
             <h6 className="text-2xl font-bold text-gray-800 mb-4">Services</h6>
             <div className="space-y-2">

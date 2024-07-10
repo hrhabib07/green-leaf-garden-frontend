@@ -1,7 +1,7 @@
 const TopBanner = () => {
   return (
     <div className="h-full bg-gray-50">
-      <div className="flex justify-between items-center max-w-[1200px] mx-auto">
+      <div className="flex flex-col-reverse md:flex-row justify-between items-center max-w-[1200px] mx-8 md:mx-auto">
         <div className="">
           <div className="text-start max-w-[600px]">
             <p className="border-l-4 border-l-green-950 pl-2 text-2xl uppercase ">

@@ -1,17 +1,31 @@
-const Product = () => {
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/features/cart/cartSlice";
+import { RootState } from "../../redux/store";
+import { useAppSelector } from "../../redux/hooks";
+
+const Product = ({ product }) => {
+  console.log(product);
+  const { _id, title, image } = product;
+  console.log(image);
+  const dispatach = useDispatch();
+  const cart = useAppSelector((state: RootState) => state.cart);
+
+  const handleAddToCart = () => {
+    dispatach(addToCart(_id));
+  };
+
   return (
     <div className="card bg-base-100 w-96 shadow-xl p-0 rounded-sm">
       <div className="relative group">
         <figure>
-          <img
-            className="w-full"
-            src="/src/assets/products/img02.jpg"
-            alt="tree-image-1"
-          />
+          <img className="w-full" src={product.image} alt="tree-image-1" />
         </figure>
         <div className="absolute inset-0 bg-black bg-opacity-30 flex items-end justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
           <div className="w-full px-16 pb-32 grid grid-cols-4  gap-2 group-hover:translate-y-0 transition-all duration-300 ease-in-out transform translate-y-full">
-            <div className="rounded-s-full btn rounded-none bg-white flex items-center justify-center h-12 text-gray-600 font-thin	hover:text-black">
+            <div
+              onClick={handleAddToCart}
+              className="rounded-s-full btn rounded-none bg-white flex items-center justify-center h-12 text-gray-600 font-thin	hover:text-black"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -84,8 +98,15 @@ const Product = () => {
         </div>
       </div>
       <div className="card-body text-center p-0 m-0 my-4">
-        <h2 className="text-center">Potted Monstera Deliciosa</h2>
+        <h2 className="text-center">{title}</h2>
         <p className="font-bold text-md text-green-950">$39.99</p>
+        <div>
+          {cart.map((item) => (
+            <div key={item.id}>
+              {item.id}: {item.quantity}
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
