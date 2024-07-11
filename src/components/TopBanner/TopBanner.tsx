@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 const TopBanner = () => {
   return (
     <div className="h-full bg-gray-50">
@@ -18,25 +20,27 @@ const TopBanner = () => {
               Green Leaf Garden!
             </p>
             <div className="h-6">
-              <button className="btn btn-active bg-green-950  text-white my-4 uppercase hover:bg-white  hover:text-green-950">
-                <span className="">Explore more</span>
-                <span className="animate-pulse">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-6"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="m4.5 4.5 15 15m0 0V8.25m0 11.25H8.25"
-                    />
-                  </svg>
-                </span>
-              </button>
+              <a href="#product-container">
+                <button className="btn btn-active bg-green-950  text-white my-4 uppercase hover:bg-white  hover:text-green-950">
+                  <span className="">Explore more</span>
+                  <span className="animate-pulse">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-6"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="m4.5 4.5 15 15m0 0V8.25m0 11.25H8.25"
+                      />
+                    </svg>
+                  </span>
+                </button>
+              </a>
             </div>
           </div>
         </div>

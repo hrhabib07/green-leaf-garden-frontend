@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useCreateProductMutation } from "../../redux/api/baseApi";
 
 const AddProductModal = () => {
+  const [errors, setErrors] = useState([]);
   const [formState, setFormState] = useState({
     title: "",
     price: 0,
@@ -28,11 +29,14 @@ const AddProductModal = () => {
       await createProduct({ ...formState }).unwrap();
       document.getElementById("my_modal_2").close(); // Close the modal after successful update
     } catch (error) {
-      console.error("Failed to crate the product: ", error.data.errorSources);
+      //   setErrors(error?.data?.errorSources);
+      setErrors(error.data.errorSources);
+      console.log(errors);
     }
   };
 
   const renderInputField = (key, value) => {
+    // console.log(error);
     return (
       <div className="my-4" key={key}>
         <label htmlFor={key} className="text-lg font-bold">
@@ -82,7 +86,23 @@ const AddProductModal = () => {
                 {renderInputField(key, value)}
               </div>
             ))}
-
+            {errors && (
+              <div>
+                {errors.length > 1 ? (
+                  <p>There is a error in your input.</p>
+                ) : (
+                  <p>There are {errors.length} error in your input.</p>
+                )}
+                <ol>
+                  {errors.map((err) => (
+                    <ol>
+                      {" "}
+                      {err?.path} : {err.message}{" "}
+                    </ol>
+                  ))}
+                </ol>
+              </div>
+            )}
             <div className="modal-action">
               <button type="submit" className="btn">
                 Save
