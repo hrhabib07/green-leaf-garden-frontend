@@ -1,7 +1,13 @@
+import Cart from "../components/cart/Cart";
+import Footer from "../components/footer/Footer";
+import Navbar from "../components/navbar/navbar";
+
 const CartPage = () => {
   return (
     <div>
-      <h1>Hello, From CartPage!</h1>
+      <Navbar></Navbar>
+      <Cart></Cart>
+      <Footer></Footer>
     </div>
   );
 };

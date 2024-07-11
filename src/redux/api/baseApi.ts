@@ -25,6 +25,7 @@ export const baseApi = createApi({
         body: product,
       }),
     }),
+
     deleteProduct: builder.mutation({
       query: (id) => ({
         url: `products/${id}`,
