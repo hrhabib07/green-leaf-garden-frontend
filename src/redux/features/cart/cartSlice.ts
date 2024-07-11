@@ -15,6 +15,7 @@ export const cartSlice = createSlice({
     addToCart: (state, action: PayloadAction<string>) => {
       const productId = action.payload;
       const existingItem = state.find((item) => item.id === productId);
+      console.log(existingItem);
       if (existingItem) {
         console.log("existingItem", existingItem);
         existingItem.quantity += 1;

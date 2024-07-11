@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 const Navbar = () => {
   return (
     <div className="bg-base-100   bg-gray-50 py-2">
@@ -5,7 +7,14 @@ const Navbar = () => {
         <div className="navbar-center hidden flex-1 lg:flex">
           <ul className="menu menu-horizontal px-1 ">
             <li>
-              <a>Home</a>
+              <NavLink to="/">
+                <a>Home</a>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/management">
+                <a>Management</a>
+              </NavLink>
             </li>
             <li>
               <a>Store</a>

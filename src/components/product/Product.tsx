@@ -2,23 +2,40 @@ import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/features/cart/cartSlice";
 import { RootState } from "../../redux/store";
 import { useAppSelector } from "../../redux/hooks";
+import { toast } from "sonner";
+import { useState } from "react";
+import { useUpdateProductMutation } from "../../redux/api/baseApi";
 
 const Product = ({ product }) => {
-  console.log(product);
+  // console.log(product);
   const { _id, title, image } = product;
-  console.log(image);
+  const [stock, setStock] = useState(product.stock);
   const dispatach = useDispatch();
+  const [updateProduct] = useUpdateProductMutation();
   const cart = useAppSelector((state: RootState) => state.cart);
 
-  const handleAddToCart = () => {
-    dispatach(addToCart(_id));
+  const handleAddToCart = async () => {
+    if (stock < 1) {
+      toast.error("No product Available");
+    } else {
+      setStock(stock - 1);
+      dispatach(addToCart(_id));
+      try {
+        await updateProduct({ id: _id, stock: stock - 1 }).unwrap();
+      } catch (error) {
+        console.error("Failed to update the product:", error);
+        toast.error("Failed to update the stock");
+      }
+    }
+    // const reduceQuantity = await ;
+    // const product =
   };
 
   return (
     <div className="card bg-base-100 w-96 shadow-xl p-0 rounded-sm">
       <div className="relative group">
         <figure>
-          <img className="w-full" src={product.image} alt="tree-image-1" />
+          <img className="w-full" src={image} alt="tree-image-1" />
         </figure>
         <div className="absolute inset-0 bg-black bg-opacity-30 flex items-end justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
           <div className="w-full px-16 pb-32 grid grid-cols-4  gap-2 group-hover:translate-y-0 transition-all duration-300 ease-in-out transform translate-y-full">
@@ -104,6 +121,7 @@ const Product = ({ product }) => {
           {cart.map((item) => (
             <div key={item.id}>
               {item.id}: {item.quantity}
+              <p>STOCK: {stock}</p>
             </div>
           ))}
         </div>

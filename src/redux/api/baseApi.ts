@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const baseApi = createApi({
@@ -7,8 +8,21 @@ export const baseApi = createApi({
     getAllProducts: builder.query({
       query: () => "products",
     }),
+    getSingleProductByID: builder.query({
+      query: (id) => `products/${id}`,
+    }),
+    updateProduct: builder.mutation({
+      query: ({ id, ...product }) => ({
+        url: `products/${id}`,
+        method: "PUT",
+        body: product,
+      }),
+    }),
   }),
 });
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const { useGetAllProductsQuery }: any = baseApi;
+export const {
+  useGetAllProductsQuery,
+  useGetProductByIDQuery,
+  useUpdateProductMutation,
+}: any = baseApi;
