@@ -41,7 +41,7 @@ const Product = ({ product }) => {
           <div className="w-full px-16 pb-32 grid grid-cols-4  gap-2 group-hover:translate-y-0 transition-all duration-300 ease-in-out transform translate-y-full">
             <div
               onClick={handleAddToCart}
-              className="rounded-s-full btn rounded-none bg-white flex items-center justify-center h-12 text-gray-600 font-thin	hover:text-black"
+              className="rounded-s-full btn rounded-none bg-white flex items-center justify-center h-12 text-gray-600 	hover:text-black"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -58,7 +58,7 @@ const Product = ({ product }) => {
                 />
               </svg>
             </div>
-            <div className="btn rounded-none bg-white flex items-center justify-center h-12 text-gray-600 font-thin	hover:text-black">
+            <div className="btn rounded-none bg-white flex items-center justify-center h-12 text-gray-600 	hover:text-black">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -74,7 +74,7 @@ const Product = ({ product }) => {
                 />
               </svg>
             </div>
-            <div className="btn rounded-none bg-white flex items-center justify-center h-12 text-gray-600 font-thin	hover:text-black">
+            <div className="btn rounded-none bg-white flex items-center justify-center h-12 text-gray-600 	hover:text-black">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -95,7 +95,7 @@ const Product = ({ product }) => {
                 />
               </svg>
             </div>
-            <div className="btn rounded-none bg-white flex items-center justify-center h-12 text-gray-600 font-thin	hover:text-black rounded-e-full">
+            <div className="btn rounded-none bg-white flex items-center justify-center h-12 text-gray-600 	hover:text-black rounded-e-full">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -129,27 +129,5 @@ const Product = ({ product }) => {
     </div>
   );
 };
-
-// {
-//   "_id": {
-//     "$oid": "668cec446491fa6f863fe8b8"
-//   },
-//   "title": "Potted Monstera Deliciosa",
-//   "price": 39.99,
-//   "category": "Indoor Plants",
-//   "description": "Large, leafy plant native to tropical forests.",
-//   "rating": 4.5,
-//   "image": "https://example.com/monstera.jpg",
-//   "brand": "GreenLeaf",
-//   "stock": 50,
-//   "isDeleted": false,
-//   "createdAt": {
-//     "$date": "2024-07-09T07:52:36.448Z"
-//   },
-//   "updatedAt": {
-//     "$date": "2024-07-09T07:52:36.448Z"
-//   },
-//   "__v": 0
-// }
 
 export default Product;

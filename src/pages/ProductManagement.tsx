@@ -5,7 +5,6 @@ const ProductManagement = () => {
   return (
     <div className="max-w-7xl mx-auto">
       <Navbar></Navbar>
-
       <CategoryManagement></CategoryManagement>
     </div>
   );
