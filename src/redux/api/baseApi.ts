@@ -8,9 +8,10 @@ export const baseApi = createApi({
     getAllProducts: builder.query({
       query: () => "products",
     }),
-    getSingleProductByID: builder.query({
+    getProductByID: builder.query({
       query: (id) => `products/${id}`,
     }),
+
     updateProduct: builder.mutation({
       query: ({ id, ...product }) => ({
         url: `products/${id}`,

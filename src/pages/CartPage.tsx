@@ -4,7 +4,7 @@ import Navbar from "../components/navbar/navbar";
 
 const CartPage = () => {
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
       <Navbar></Navbar>
       <Cart></Cart>
       <Footer></Footer>
