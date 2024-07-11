@@ -8,18 +8,19 @@ import { useUpdateProductMutation } from "../../redux/api/baseApi";
 
 const Product = ({ product }) => {
   // console.log(product);
-  const { _id, title, image } = product;
+  const { _id, title, image, price } = product;
   const [stock, setStock] = useState(product.stock);
   const dispatach = useDispatch();
   const [updateProduct] = useUpdateProductMutation();
   const cart = useAppSelector((state: RootState) => state.cart);
 
   const handleAddToCart = async () => {
+    toast.success("your product added to cart successfully");
     if (stock < 1) {
       toast.error("No product Available");
     } else {
       setStock(stock - 1);
-      dispatach(addToCart(_id));
+      dispatach(addToCart({ id: _id, price }));
       try {
         await updateProduct({ id: _id, stock: stock - 1 }).unwrap();
       } catch (error) {
@@ -117,14 +118,6 @@ const Product = ({ product }) => {
       <div className="card-body text-center p-0 m-0 my-4">
         <h2 className="text-center">{title}</h2>
         <p className="font-bold text-md text-green-950">$39.99</p>
-        <div>
-          {cart.map((item) => (
-            <div key={item.id}>
-              {item.id}: {item.quantity}
-              <p>STOCK: {stock}</p>
-            </div>
-          ))}
-        </div>
       </div>
     </div>
   );

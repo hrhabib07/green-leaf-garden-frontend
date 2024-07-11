@@ -5,38 +5,39 @@ import { useGetProductByIDQuery } from "../../redux/api/baseApi";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
-  // const { data } = useGetProductByIDQuery();
-  // console.log(cart);
-  // // console.log();
-  // // const data = cart.map((item) => getProductByID(item.id));
-  // console.log(data);
+  // Fetch product data for all items in the cart
+  const productsData = cart.map((item) => ({
+    ...item,
+    ...useGetProductByIDQuery(item.id),
+  }));
+
+  const isLoading = productsData.some((item) => item.isLoading);
+  const hasError = productsData.some((item) => item.error);
+
   return (
-    <div className="grid grid-cols-10 my-8">
-      <div className="col-span-7  gap-4  justify-center">
+    <div className="grid grid-cols-10 gap-8 my-8 mx-20">
+      <div className="col-span-8  gap-4  justify-center">
         {cart.length === 0 ? (
-          <p className="text-red-500">You have nothing this the cart</p>
+          <p className="text-red-500">You have nothing in the cart</p>
         ) : (
-          <div className=" flex flex-col">
-            {cart.map((item) => {
-              const { data, error, isLoading } = useGetProductByIDQuery(
-                item.id
-              );
-
-              if (isLoading) return <p key={item.id}>Loading...</p>;
-              if (error) return <p key={item.id}>Error loading product</p>;
-
-              return (
+          <div className="flex flex-col">
+            {isLoading ? (
+              <p>Loading...</p>
+            ) : hasError ? (
+              <p>Error loading products</p>
+            ) : (
+              productsData.map((item) => (
                 <CartItem
                   key={item.id}
+                  product={item.data.data}
                   quantity={item.quantity}
-                  product={data.data}
                 />
-              );
-            })}
+              ))
+            )}
           </div>
         )}
       </div>
-      <div>
+      <div className="col-span-2">
         <CartSummary></CartSummary>
       </div>
     </div>

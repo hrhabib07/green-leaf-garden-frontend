@@ -5,7 +5,7 @@ import ProductContainer from "./components/product/ProductContainer";
 import TopBanner from "./components/TopBanner/TopBanner";
 function App() {
   return (
-    <div className="max-w-full lg:max-w-7xl mx-auto">
+    <div className="">
       <Navbar></Navbar>
       <TopBanner></TopBanner>
       {/* <div>{data}</div> */}
