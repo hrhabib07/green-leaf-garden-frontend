@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useGetAllProductsQuery } from "../../redux/api/baseApi";
 import Product from "./Product";
+import SearchAndFilterBar from "../searchAndFilter/SearchAndFilterBar";
 
 const ProductContainer = () => {
   const { data } = useGetAllProductsQuery();
@@ -15,6 +16,7 @@ const ProductContainer = () => {
           You can add your product here!{" "}
         </p>
       </div>
+      <SearchAndFilterBar></SearchAndFilterBar>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {products?.slice(0, 6).map((item) => (
           <Product product={item} key={item._id}></Product>

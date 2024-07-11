@@ -36,15 +36,8 @@ export const cartSlice = createSlice({
         toast.error("You can not order zero item.");
       }
     },
-    deleteFromCart: (state, action: PayloadAction<string>) => {
-      const productId = action.payload;
-      const index = state.findIndex((item) => item.id === productId);
-      if (index !== -1) {
-        state.splice(index, 1); // Removes the item from the array
-      }
-    },
   },
 });
 
-export const { addToCart, removeFromCart, deleteFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart } = cartSlice.actions;
 export default cartSlice.reducer;

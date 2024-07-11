@@ -1,5 +1,6 @@
 import { toast } from "sonner";
 import { useAppSelector } from "../../redux/hooks";
+import OrderPlacementModal from "./orderPlacementModal";
 
 const CartSummary = () => {
   const cart = useAppSelector((state) => state.cart);
@@ -11,11 +12,9 @@ const CartSummary = () => {
       (totalPrice = totalPrice + item.price * item.quantity)
     )
   );
-  const handlePlaceOrder = () => {
-    toast.success("Your order have been placed successfully");
-    // location.reload();
-    // document.location.href = "/";
-  };
+  // const handlePlaceOrder = () => {
+  //
+  // };
 
   return (
     <div>
@@ -29,10 +28,11 @@ const CartSummary = () => {
         <span>{totalQuantity}</span>
       </div>
       <button
-        onClick={handlePlaceOrder}
-        className="btn bg-green-950 text-white my-2 uppercase hover:bg-white hover:text-green-950"
+        onClick={() => document.getElementById("my_modal_3").showModal()}
+        className="btn bg-green-950 text-white my-2  hover:bg-white hover:text-green-950"
       >
-        Place Order
+        <span className="uppercase">Place Order</span>
+        <OrderPlacementModal></OrderPlacementModal>
       </button>
     </div>
   );
