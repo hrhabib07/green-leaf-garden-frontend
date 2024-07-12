@@ -34,8 +34,8 @@ const Product = ({ product }) => {
   };
 
   return (
-    <div className="card bg-base-100 w-96 shadow-xl p-0 rounded-sm">
-      <div className="relative group">
+    <div className="bg-base-100 w-96 shadow-lg p-0 rounded-sm m-0 border-3 border-black my-4">
+      <div className="relative group p-0 m-0">
         <figure>
           <img className="w-full" src={image} alt="tree-image-1" />
         </figure>
@@ -118,8 +118,9 @@ const Product = ({ product }) => {
       </div>
       <div className="card-body text-center p-0 m-0 my-4">
         <h2 className="text-center">{title}</h2>
-        <div>
+        <div className="flex items-center justify-center">
           <Rating value={rating}></Rating>
+          <span>({rating})</span>
           <div className="flex"></div>
         </div>
         <p className="font-bold text-md text-green-950">$39.99</p>

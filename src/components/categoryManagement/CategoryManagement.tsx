@@ -1,10 +1,18 @@
+import { useState } from "react";
 import { useGetAllProductsQuery } from "../../redux/api/baseApi";
 import ProductTable from "./ProductTable";
+import ProductUpdateModal from "./ProductUpdateModal";
 
 const CategoryManagement = () => {
   const { data } = useGetAllProductsQuery();
   const products = data?.data;
-  console.log(products);
+
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const handleEditProduct = (product) => {
+    setSelectedProduct(product);
+    document.getElementById("my_modal_1").showModal();
+  };
 
   return (
     <div className="overflow-x-auto my-8">
@@ -26,10 +34,12 @@ const CategoryManagement = () => {
               key={index}
               product={item}
               rank={index + 1}
-            ></ProductTable>
+              onEditProduct={handleEditProduct}
+            />
           ))}
         </tbody>
       </table>
+      {selectedProduct && <ProductUpdateModal product={selectedProduct} />}
     </div>
   );
 };

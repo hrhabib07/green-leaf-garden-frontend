@@ -33,12 +33,3 @@ const CategoryDashboardHeader = () => {
 };
 
 export default CategoryDashboardHeader;
-
-//   <div>
-//     <h1 className="text-2xl font-bold text-center">
-//       Welcome to
-//     </h1>
-//     <p className="text-lg mt-2 text-center">
-//
-//     </p>
-//   </div>

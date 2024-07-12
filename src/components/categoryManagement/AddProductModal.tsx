@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useCreateProductMutation } from "../../redux/api/baseApi";
+import { toast } from "sonner";
 
 const AddProductModal = () => {
   const [errors, setErrors] = useState([]);
@@ -26,12 +27,19 @@ const AddProductModal = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await createProduct({ ...formState }).unwrap();
+      console.log(formState);
+      await createProduct({
+        ...formState,
+        price: Number(formState.price),
+        rating: Number(formState.rating),
+        stock: Number(formState.stock),
+      }).unwrap();
       document.getElementById("my_modal_2").close(); // Close the modal after successful update
+      toast.success("Product added successfully");
     } catch (error) {
       //   setErrors(error?.data?.errorSources);
       setErrors(error.data.errorSources);
-      console.log(errors);
+      // console.log(errors);
     }
   };
 
@@ -95,7 +103,7 @@ const AddProductModal = () => {
                 )}
                 <ol>
                   {errors.map((err) => (
-                    <ol>
+                    <ol className="text-red-600">
                       {" "}
                       {err?.path} : {err.message}{" "}
                     </ol>
