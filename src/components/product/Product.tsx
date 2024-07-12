@@ -5,10 +5,11 @@ import { useAppSelector } from "../../redux/hooks";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useUpdateProductMutation } from "../../redux/api/baseApi";
+import Rating from "../rating/Rating";
 
 const Product = ({ product }) => {
   // console.log(product);
-  const { _id, title, image, price } = product;
+  const { _id, title, image, price, rating } = product;
   const [stock, setStock] = useState(product.stock);
   const dispatach = useDispatch();
   const [updateProduct] = useUpdateProductMutation();
@@ -117,6 +118,10 @@ const Product = ({ product }) => {
       </div>
       <div className="card-body text-center p-0 m-0 my-4">
         <h2 className="text-center">{title}</h2>
+        <div>
+          <Rating value={rating}></Rating>
+          <div className="flex"></div>
+        </div>
         <p className="font-bold text-md text-green-950">$39.99</p>
       </div>
     </div>
