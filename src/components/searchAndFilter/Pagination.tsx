@@ -1,7 +1,13 @@
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+const Pagination = ({
+  currentPage,
+  totalPages,
+  onPageChange,
+  setCurrentPage,
+}) => {
   const handlePageChange = (page) => {
     if (page > 0 && page <= totalPages) {
       onPageChange(page);
+      setCurrentPage(page);
     }
   };
 

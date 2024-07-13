@@ -16,12 +16,10 @@ const ProductContainer = () => {
 
   const { data } = useGetAllProductsQuery();
   const allProducts = data?.data;
-  // console.log("all", data.data);
+  // console.log("all", allProducts);
 
   const pageLimit = 3;
-  useEffect(() => {
-    refetch();
-  }, [searchedText, treeCategory, sortValue, currentPage, refetch]);
+
   const searchAndQuery = `searchTerm=${searchedText}&category=${treeCategory}&sort=${sortValue}&page=${currentPage}`;
 
   let products;
@@ -37,7 +35,10 @@ const ProductContainer = () => {
     // console.log(data);
     products = data?.data;
   } else {
-    const { data } = useGetAllProductsQuery();
+    // const { data } = useGetAllProductsQuery();
+    const { data } = useGetSearchedProductsQuery(
+      `sort=${sortValue}&page=${currentPage}&limit=${pageLimit}`
+    );
     products = data?.data;
   }
 
@@ -75,7 +76,7 @@ const ProductContainer = () => {
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {products?.slice(0, 3).map((item) => (
+        {products?.map((item) => (
           <Product product={item} key={item._id}></Product>
         ))}
       </div>
@@ -84,6 +85,7 @@ const ProductContainer = () => {
           currentPage={currentPage}
           totalPages={totalPages}
           onPageChange={handleChangePage}
+          setCurrentPage={setCurrentPage}
         ></Pagination>
       </div>
       <NavLink to="/products" className="h-6 py-12">
