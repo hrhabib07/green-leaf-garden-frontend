@@ -10,6 +10,10 @@ export const baseApi = createApi({
       query: () => "products",
       providesTags: ["product"],
     }),
+    getSearchedProducts: builder.query({
+      query: (searchTerm) => `products?${searchTerm}`,
+    }),
+
     getProductByID: builder.query({
       query: (id) => `products/${id}`,
     }),
@@ -43,6 +47,7 @@ export const baseApi = createApi({
 
 export const {
   useGetAllProductsQuery,
+  useGetSearchedProductsQuery,
   useGetProductByIDQuery,
   useUpdateProductMutation,
   useCreateProductMutation,

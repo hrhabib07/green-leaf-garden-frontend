@@ -123,7 +123,7 @@ const Product = ({ product }) => {
           <span>({rating})</span>
           <div className="flex"></div>
         </div>
-        <p className="font-bold text-md text-green-950">$39.99</p>
+        <p className="font-bold text-md text-green-950">${price}</p>
       </div>
     </div>
   );

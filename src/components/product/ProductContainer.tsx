@@ -1,11 +1,37 @@
 import { NavLink } from "react-router-dom";
-import { useGetAllProductsQuery } from "../../redux/api/baseApi";
+import {
+  useGetAllProductsQuery,
+  useGetSearchedProductsQuery,
+} from "../../redux/api/baseApi";
 import Product from "./Product";
 import SearchAndFilterBar from "../searchAndFilter/SearchAndFilterBar";
+import { useState } from "react";
 
 const ProductContainer = () => {
-  const { data } = useGetAllProductsQuery();
-  const products = data?.data;
+  const [searchedText, setSearchedText] = useState("");
+  const [treeCategory, setTreeCategory] = useState("");
+  const [sortValue, setSortValue] = useState("");
+  // console.log(sortValue);
+
+  const searchAndQuery = `searchTerm=${searchedText}&category=${treeCategory}&sort=${sortValue}`;
+  console.log(searchAndQuery);
+
+  // console.log(treeCategory);
+  console.log(searchedText);
+  let products;
+  if ((searchedText || treeCategory) && sortValue) {
+    const { data } = useGetSearchedProductsQuery(searchAndQuery);
+    // console.log(data);
+    products = data?.data;
+    // console.log(products);
+  } else if (sortValue) {
+    const { data } = useGetSearchedProductsQuery(`sort=${sortValue}`);
+    // console.log(data);
+    products = data?.data;
+  } else {
+    const { data } = useGetAllProductsQuery();
+    products = data?.data;
+  }
   return (
     <div className="my-16 max-w-7xl mx-auto" id="product-container">
       <div className="">
@@ -16,7 +42,25 @@ const ProductContainer = () => {
           You can add your product here!{" "}
         </p>
       </div>
-      <SearchAndFilterBar></SearchAndFilterBar>
+      <SearchAndFilterBar
+        setSearchedText={setSearchedText}
+        setTreeCategory={setTreeCategory}
+        treeCategory={treeCategory}
+        setSortValue={setSortValue}
+        sortValue={sortValue}
+      ></SearchAndFilterBar>
+      <div className="my-2">
+        {(searchedText || treeCategory) && products.length > 0 && (
+          <p className="text-start text-green-500">
+            {products.length} Data found{" "}
+          </p>
+        )}
+        {(searchedText || treeCategory) && products.length === 0 && (
+          <p className="text-red-500 text-center text-xl font-semibold">
+            No Data found{" "}
+          </p>
+        )}
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
         {products?.slice(0, 6).map((item) => (
           <Product product={item} key={item._id}></Product>
