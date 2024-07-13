@@ -5,6 +5,7 @@ import { useGetProductByIDQuery } from "../../redux/api/baseApi";
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  console.log(cart);
   // Fetch product data for all items in the cart
   const productsData = cart.map((item) => ({
     ...item,

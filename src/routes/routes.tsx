@@ -3,6 +3,7 @@ import App from "../App";
 import ProductManagement from "../pages/ProductManagement";
 import AllProducts from "../pages/AllProducts";
 import CartPage from "../pages/CartPage";
+import ProductDetails from "../components/product/ProductDetails";
 
 export const router = createBrowserRouter([
   {
@@ -21,5 +22,9 @@ export const router = createBrowserRouter([
   {
     path: "/cart",
     element: <CartPage></CartPage>,
+  },
+  {
+    path: "/product/:id",
+    element: <ProductDetails />,
   },
 ]);
