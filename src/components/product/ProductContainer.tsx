@@ -6,18 +6,24 @@ import {
 import Product from "./Product";
 import SearchAndFilterBar from "../searchAndFilter/SearchAndFilterBar";
 import { useState } from "react";
+import Pagination from "../searchAndFilter/Pagination";
 
 const ProductContainer = () => {
   const [searchedText, setSearchedText] = useState("");
   const [treeCategory, setTreeCategory] = useState("");
   const [sortValue, setSortValue] = useState("");
-  // console.log(sortValue);
+  const [currentPage, setCurrentPage] = useState(1);
 
-  const searchAndQuery = `searchTerm=${searchedText}&category=${treeCategory}&sort=${sortValue}`;
-  console.log(searchAndQuery);
+  const { data } = useGetAllProductsQuery();
+  const allProducts = data?.data;
+  // console.log("all", data.data);
 
-  // console.log(treeCategory);
-  console.log(searchedText);
+  const pageLimit = 3;
+  useEffect(() => {
+    refetch();
+  }, [searchedText, treeCategory, sortValue, currentPage, refetch]);
+  const searchAndQuery = `searchTerm=${searchedText}&category=${treeCategory}&sort=${sortValue}&page=${currentPage}`;
+
   let products;
   if ((searchedText || treeCategory) && sortValue) {
     const { data } = useGetSearchedProductsQuery(searchAndQuery);
@@ -25,13 +31,20 @@ const ProductContainer = () => {
     products = data?.data;
     // console.log(products);
   } else if (sortValue) {
-    const { data } = useGetSearchedProductsQuery(`sort=${sortValue}`);
+    const { data } = useGetSearchedProductsQuery(
+      `sort=${sortValue}&page=${currentPage}`
+    );
     // console.log(data);
     products = data?.data;
   } else {
     const { data } = useGetAllProductsQuery();
     products = data?.data;
   }
+
+  const totalPages = Math.ceil(allProducts?.length / pageLimit);
+  const handleChangePage = (newPage) => {
+    setCurrentPage(newPage);
+  };
   return (
     <div className="my-16 max-w-7xl mx-auto" id="product-container">
       <div className="">
@@ -62,9 +75,16 @@ const ProductContainer = () => {
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {products?.slice(0, 6).map((item) => (
+        {products?.slice(0, 3).map((item) => (
           <Product product={item} key={item._id}></Product>
         ))}
+      </div>
+      <div className="my-8">
+        <Pagination
+          currentPage={currentPage}
+          totalPages={totalPages}
+          onPageChange={handleChangePage}
+        ></Pagination>
       </div>
       <NavLink to="/products" className="h-6 py-12">
         <button className="btn btn-active bg-green-950  text-white my-4 uppercase hover:bg-white  hover:text-green-950">
