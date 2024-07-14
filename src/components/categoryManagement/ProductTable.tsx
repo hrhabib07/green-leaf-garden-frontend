@@ -1,9 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDeleteProductMutation } from "../../redux/api/baseApi";
-import { useAppDispatch } from "../../redux/hooks";
 
-const ProductTable = ({ product, rank, onEditProduct }) => {
+const ProductTable = ({ product, rank, onEditProduct }: any) => {
   const { _id, title, description, price, stock } = product;
-  const dispatch = useAppDispatch();
+
   const [deleteProduct] = useDeleteProductMutation();
 
   const handleDeleteProduct = async () => {

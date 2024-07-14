@@ -36,7 +36,7 @@ export const cartSlice = createSlice({
         toast.error("You can not order zero item.");
       }
     },
-    clearTheCart: (state) => {
+    clearTheCart: () => {
       return [];
     },
   },

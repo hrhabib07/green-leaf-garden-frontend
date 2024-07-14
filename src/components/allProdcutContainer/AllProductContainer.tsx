@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/rules-of-hooks */
 import { useState } from "react";
 import {
   useGetAllProductsQuery,
@@ -49,7 +51,7 @@ const AllProductContainer = () => {
   }
 
   const totalPages = Math.ceil(allProducts?.length / pageLimit);
-  const handleChangePage = (newPage) => {
+  const handleChangePage = (newPage: any) => {
     setCurrentPage(newPage);
   };
 
@@ -86,7 +88,7 @@ const AllProductContainer = () => {
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {products?.map((item) => (
+        {products?.map((item: any) => (
           <Product product={item} key={item._id}></Product>
         ))}
       </div>

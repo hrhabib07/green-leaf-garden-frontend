@@ -1,14 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useUpdateProductMutation } from "../../redux/api/baseApi";
 import { useAppDispatch } from "../../redux/hooks";
 import { toast } from "sonner";
-import {
-  addToCart,
-  deleteFromCart,
-  removeFromCart,
-} from "../../redux/features/cart/cartSlice";
+import { addToCart, removeFromCart } from "../../redux/features/cart/cartSlice";
 
-const CartItem = ({ product, quantity }) => {
+const CartItem = ({ product, quantity }: any) => {
   const [stock, setStock] = useState(product.stock);
   const { title, description, price, image, _id } = product;
   const dispatch = useAppDispatch();

@@ -1,10 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 const Pagination = ({
   currentPage,
   totalPages,
   onPageChange,
   setCurrentPage,
-}) => {
-  const handlePageChange = (page) => {
+}: any) => {
+  const handlePageChange = (page: any) => {
     if (page > 0 && page <= totalPages) {
       onPageChange(page);
       setCurrentPage(page);

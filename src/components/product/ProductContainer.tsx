@@ -5,7 +5,7 @@ import {
 } from "../../redux/api/baseApi";
 import Product from "./Product";
 import SearchAndFilterBar from "../searchAndFilter/SearchAndFilterBar";
-import { useState } from "react";
+import { Key, SetStateAction, useState } from "react";
 import Pagination from "../searchAndFilter/Pagination";
 
 const ProductContainer = () => {
@@ -14,47 +14,69 @@ const ProductContainer = () => {
   const [sortValue, setSortValue] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data } = useGetAllProductsQuery();
-  const allProducts = data?.data;
-  // console.log("all", allProducts);
+  const { data: allData } = useGetAllProductsQuery();
+  const allProducts = allData?.data;
 
   const pageLimit = 3;
 
-  const searchAndQuery = `searchTerm=${searchedText}&category=${treeCategory}&sort=${sortValue}&page=${currentPage}`;
+  // Construct the query parameters based on the state values
+  const queryParams = new URLSearchParams({
+    ...(searchedText && { searchTerm: searchedText }),
+    ...(treeCategory && { category: treeCategory }),
+    ...(sortValue && { sort: sortValue }),
+    page: currentPage.toString(), // Convert number to string
+    limit: pageLimit.toString(),
+  }).toString();
 
-  let products;
-  if ((searchedText || treeCategory) && sortValue) {
-    const { data } = useGetSearchedProductsQuery(searchAndQuery);
-    // console.log(data);
-    products = data?.data;
-    // console.log(products);
-  } else if (searchedText && treeCategory) {
-    const { data } = useGetSearchedProductsQuery(
-      `category=${treeCategory}&sort=${sortValue}&page=${currentPage}`
-    );
-    // console.log(data);
-    products = data?.data;
-  } else if (sortValue) {
-    const { data } = useGetSearchedProductsQuery(
-      `sort=${sortValue}&page=${currentPage}`
-    );
-    // console.log(data);
-    products = data?.data;
-  } else if (treeCategory) {
-    const { data } = useGetSearchedProductsQuery(
-      `category=${treeCategory}&page=${currentPage}`
-    );
-    products = data?.data;
-  } else {
-    // const { data } = useGetAllProductsQuery();
-    const { data } = useGetSearchedProductsQuery(
-      `sort=${sortValue}&page=${currentPage}&limit=${pageLimit}`
-    );
-    products = data?.data;
-  }
+  // Fetch the products based on the query parameters
+  const { data } = useGetSearchedProductsQuery(queryParams);
+  const products = data?.data || allProducts;
+  // const [searchedText, setSearchedText] = useState("");
+  // const [treeCategory, setTreeCategory] = useState("");
+  // const [sortValue, setSortValue] = useState("");
+  // const [currentPage, setCurrentPage] = useState(1);
+
+  // const { data } = useGetAllProductsQuery();
+  // const allProducts = data?.data;
+  // // console.log("all", allProducts);
+
+  // const pageLimit = 3;
+
+  // const searchAndQuery = `searchTerm=${searchedText}&category=${treeCategory}&sort=${sortValue}&page=${currentPage}`;
+
+  // let products;
+  // if ((searchedText || treeCategory) && sortValue) {
+  //   const { data } = useGetSearchedProductsQuery(searchAndQuery);
+  //   // console.log(data);
+  //   products = data?.data;
+  //   // console.log(products);
+  // } else if (searchedText && treeCategory) {
+  //   const { data } = useGetSearchedProductsQuery(
+  //     `category=${treeCategory}&sort=${sortValue}&page=${currentPage}`
+  //   );
+  //   // console.log(data);
+  //   products = data?.data;
+  // } else if (sortValue) {
+  //   const { data } = useGetSearchedProductsQuery(
+  //     `sort=${sortValue}&page=${currentPage}`
+  //   );
+  //   // console.log(data);
+  //   products = data?.data;
+  // } else if (treeCategory) {
+  //   const { data } = useGetSearchedProductsQuery(
+  //     `category=${treeCategory}&page=${currentPage}`
+  //   );
+  //   products = data?.data;
+  // } else {
+  //   // const { data } = useGetAllProductsQuery();
+  //   const { data } = useGetSearchedProductsQuery(
+  //     `sort=${sortValue}&page=${currentPage}&limit=${pageLimit}`
+  //   );
+  //   products = data?.data;
+  // }
 
   const totalPages = Math.ceil(allProducts?.length / pageLimit);
-  const handleChangePage = (newPage) => {
+  const handleChangePage = (newPage: SetStateAction<number>) => {
     setCurrentPage(newPage);
   };
   return (
@@ -87,7 +109,7 @@ const ProductContainer = () => {
         )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {products?.map((item) => (
+        {products?.map((item: { _id: Key | null | undefined }) => (
           <Product product={item} key={item._id}></Product>
         ))}
       </div>

@@ -1,6 +1,11 @@
 import AddProductModal from "./AddProductModal";
 
 const CategoryDashboardHeader = () => {
+  const handleModalOpen = () => {
+    // () => document.getElementById("my_modal_2").showModal();
+    const modal = document.getElementById("my_modal_2") as HTMLDialogElement;
+    modal?.close();
+  };
   return (
     <div className="h-full bg-gray-50 py-4">
       <div className="flex flex-col-reverse md:flex-row justify-between items-center max-w-[1200px] mx-8 md:mx-auto">
@@ -16,10 +21,7 @@ const CategoryDashboardHeader = () => {
             <p className="my-2 text-gray-500">
               Manage your product inventory effortlessly.
             </p>
-            <div
-              onClick={() => document.getElementById("my_modal_2").showModal()}
-              className="h-6"
-            >
+            <div onClick={handleModalOpen} className="h-6">
               <AddProductModal></AddProductModal>
             </div>
           </div>

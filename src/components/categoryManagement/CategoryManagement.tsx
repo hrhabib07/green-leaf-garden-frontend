@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { SetStateAction, useState } from "react";
 import { useGetAllProductsQuery } from "../../redux/api/baseApi";
 import ProductTable from "./ProductTable";
 import ProductUpdateModal from "./ProductUpdateModal";
@@ -9,9 +10,11 @@ const CategoryManagement = () => {
 
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const handleEditProduct = (product) => {
+  const handleEditProduct = (product: SetStateAction<null>) => {
     setSelectedProduct(product);
-    document.getElementById("my_modal_1").showModal();
+    // document?.getElementById("my_modal_1")?.showModal();
+    const modal = document.getElementById("my_modal_1") as HTMLDialogElement;
+    modal?.close();
   };
 
   return (
@@ -29,7 +32,7 @@ const CategoryManagement = () => {
           </tr>
         </thead>
         <tbody>
-          {products?.map((item, index) => (
+          {products?.map((item: any, index: any) => (
             <ProductTable
               key={index}
               product={item}

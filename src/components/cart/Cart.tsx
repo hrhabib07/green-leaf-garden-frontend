@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux";
+/* eslint-disable react-hooks/rules-of-hooks */
 import CartItem from "./CartItem";
 import CartSummary from "./CartSummary";
 import { useGetProductByIDQuery } from "../../redux/api/baseApi";
+import { useAppSelector } from "../../redux/hooks";
 
 const Cart = () => {
-  const cart = useSelector((state) => state.cart);
+  const cart = useAppSelector((state) => state.cart);
   console.log(cart);
   // Fetch product data for all items in the cart
   const productsData = cart.map((item) => ({

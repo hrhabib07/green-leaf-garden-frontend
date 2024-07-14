@@ -1,16 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { toast } from "sonner";
 import { useCreateOrderMutation } from "../../redux/api/baseApi";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const OrderPlacementModal = ({ order }) => {
+const OrderPlacementModal = ({ order }: any) => {
   console.log(order);
   const [userData, setUserData] = useState({
     name: "",
     phone: "",
     address: "",
   });
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setUserData((prevState) => ({
       ...prevState,
@@ -21,7 +22,7 @@ const OrderPlacementModal = ({ order }) => {
   const [createOrder] = useCreateOrderMutation();
   const navigate = useNavigate();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       console.log(userData);
@@ -31,7 +32,9 @@ const OrderPlacementModal = ({ order }) => {
       }).unwrap();
       toast.success("Your order have been placed successfully");
       navigate("/order-placed");
-      document.getElementById("my_modal_7").close(); // Close the modal after
+      const modal = document.getElementById("my_modal_7") as HTMLDialogElement;
+      modal?.close(); // Close the modal after
+      // document?.getElementById("my_modal_7")?.close(); // Close the modal after
       toast.success("Product added successfully");
     } catch (error) {
       console.log(error);

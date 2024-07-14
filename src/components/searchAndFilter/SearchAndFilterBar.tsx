@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { SetStateAction, useState } from "react";
 
 const SearchAndFilterBar = ({
   setSearchedText,
@@ -6,20 +7,22 @@ const SearchAndFilterBar = ({
   treeCategory,
   setSortValue,
   sortValue,
-}) => {
+}: any) => {
   const [searchTerm, setSearchTerm] = useState("");
-  const handleCategoryChange = (event) => {
+  const handleCategoryChange = (event: { target: { value: any } }) => {
     setTreeCategory(event.target.value);
   };
-  const handleSortChange = (event) => {
+  const handleSortChange = (event: { target: { value: any } }) => {
     setSortValue(event.target.value);
   };
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: {
+    target: { value: SetStateAction<string> };
+  }) => {
     setSearchTerm(event.target.value);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
 
     setSearchedText(searchTerm);

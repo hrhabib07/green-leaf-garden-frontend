@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
 import { useUpdateProductMutation } from "../../redux/api/baseApi";
 
-const ProductUpdateModal = ({ product }) => {
+const ProductUpdateModal = ({ product }: any) => {
   const [treeCategory, setTreeCategory] = useState(product.category);
-  const handleCategoryChange = (event) => {
+  const handleCategoryChange = (event: { target: { value: any } }) => {
     setTreeCategory(event.target.value);
   };
   const [formState, setFormState] = useState({
@@ -32,7 +33,7 @@ const ProductUpdateModal = ({ product }) => {
 
   const [updateProduct] = useUpdateProductMutation();
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormState((prevState) => ({
       ...prevState,
@@ -40,7 +41,7 @@ const ProductUpdateModal = ({ product }) => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       await updateProduct({
@@ -48,13 +49,15 @@ const ProductUpdateModal = ({ product }) => {
         ...formState,
         category: treeCategory,
       }).unwrap();
-      document.getElementById("my_modal_1").close(); // Close the modal after successful update
+      const modal = document.getElementById("my_modal_1") as HTMLDialogElement;
+      modal?.close();
+      // document?.getElementById("my_modal_1")?.close(); // Close the modal after successful update
     } catch (error) {
       console.error("Failed to update the product: ", error);
     }
   };
 
-  const renderInputField = (key, value) => {
+  const renderInputField = (key: string, value: string | number) => {
     return (
       <div className="my-4" key={key}>
         <label htmlFor={key} className="text-lg font-bold">

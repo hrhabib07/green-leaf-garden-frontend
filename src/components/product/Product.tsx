@@ -1,21 +1,18 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useDispatch } from "react-redux";
 import { addToCart } from "../../redux/features/cart/cartSlice";
-import { RootState } from "../../redux/store";
-import { useAppSelector } from "../../redux/hooks";
 import { toast } from "sonner";
 import { useState } from "react";
 import { useUpdateProductMutation } from "../../redux/api/baseApi";
 import Rating from "../rating/Rating";
 import { NavLink } from "react-router-dom";
-import ProductDetails from "./ProductDetails";
 
-const Product = ({ product }) => {
+const Product = ({ product }: any) => {
   // console.log(product);
   const { _id, title, image, price, rating } = product;
   const [stock, setStock] = useState(product.stock);
   const dispatach = useDispatch();
   const [updateProduct] = useUpdateProductMutation();
-  const cart = useAppSelector((state: RootState) => state.cart);
 
   const handleAddToCart = async () => {
     toast.success("your product added to cart successfully");

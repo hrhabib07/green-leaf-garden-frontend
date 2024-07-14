@@ -1,9 +1,14 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
 import { useCreateProductMutation } from "../../redux/api/baseApi";
 import { toast } from "sonner";
 
 const AddProductModal = () => {
-  const [errors, setErrors] = useState([]);
+  interface Error {
+    path: string;
+    message: string;
+  }
+  const [errors, setErrors] = useState<Error[]>([]);
   const [treeCategory, setTreeCategory] = useState([]);
 
   const [formState, setFormState] = useState({
@@ -17,7 +22,7 @@ const AddProductModal = () => {
   });
   const [createProduct] = useCreateProductMutation();
 
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormState((prevState) => ({
       ...prevState,
@@ -25,11 +30,11 @@ const AddProductModal = () => {
     }));
   };
 
-  const handleCategoryChange = (event) => {
+  const handleCategoryChange = (event: any) => {
     setTreeCategory(event.target.value);
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       console.log(formState);
@@ -40,24 +45,21 @@ const AddProductModal = () => {
         stock: Number(formState.stock),
         category: treeCategory,
       }).unwrap();
-      document.getElementById("my_modal_2").close(); // Close the modal after successful update
+      const modal = document.getElementById("my_modal_2") as HTMLDialogElement;
+      modal?.close();
+      // document?.getElementById("my_modal_2")?.close(); // Close the modal after successful update
       toast.success("Product added successfully");
-    } catch (error) {
-      //   setErrors(error?.data?.errorSources);
+    } catch (error: any) {
       setErrors(error.data.errorSources);
-      // console.log(errors);
     }
   };
 
-  const renderInputField = (key, value) => {
+  const renderInputField = (key: string, value: string | number) => {
     // console.log(error);
     return (
       <div className="my-4" key={key}>
         <label htmlFor={key} className="text-lg font-bold">
           {key.charAt(0).toUpperCase() + key.slice(1)}{" "}
-          {/* <small className="text-red-500">
-            type : {typeof value === "number" ? "number" : "text"}
-          </small> */}
         </label>
         <input
           type={typeof value === "number" ? "number" : "text"}

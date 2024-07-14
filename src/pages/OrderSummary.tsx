@@ -1,4 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable react-hooks/rules-of-hooks */
+import { useDispatch } from "react-redux";
 import Footer from "../components/footer/Footer";
 import Navbar from "../components/navbar/navbar";
 import {
@@ -9,26 +11,28 @@ import CartItem from "../components/cart/CartItem";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { useAppSelector } from "../redux/hooks";
 import { clearTheCart } from "../redux/features/cart/cartSlice";
+import { useAppSelector } from "../redux/hooks";
 
 const OrderSummary = () => {
-  const cart = useSelector((state) => state.cart);
+  const cart = useAppSelector((state) => state.cart);
   const order = cart;
   // Fetch product data for all items in the cart
-  const productsData = cart.map((item) => ({
+  const productsData = cart.map((item: { id: any }) => ({
     ...item,
     ...useGetProductByIDQuery(item.id),
   }));
 
-  const isLoading = productsData.some((item) => item.isLoading);
-  const hasError = productsData.some((item) => item.error);
+  const isLoading = productsData.some(
+    (item: { isLoading: any }) => item.isLoading
+  );
+  const hasError = productsData.some((item: { error: any }) => item.error);
   const [userData, setUserData] = useState({
     name: "",
     phone: "",
     address: "",
   });
-  const handleChange = (e) => {
+  const handleChange = (e: any) => {
     const { name, value } = e.target;
     setUserData((prevState) => ({
       ...prevState,
@@ -40,7 +44,7 @@ const OrderSummary = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch(); // Add the useDispatch hook
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     try {
       console.log(userData);

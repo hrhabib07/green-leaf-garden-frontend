@@ -2,7 +2,7 @@ import { NavLink } from "react-router-dom";
 
 const Navbar = () => {
   return (
-    <div className="bg-base-100   bg-gray-50 py-2">
+    <div className="bg-gray-50 py-2">
       <div className="max-w-[1200px] navbar  mx-auto flex justify-evenly">
         <div className="navbar-center hidden flex-1 lg:flex">
           <ul className="menu menu-horizontal px-1 ">
