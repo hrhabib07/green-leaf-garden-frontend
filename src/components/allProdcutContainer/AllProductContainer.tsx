@@ -22,6 +22,7 @@ const AllProductContainer = () => {
   const searchAndQuery = `searchTerm=${searchedText}&category=${treeCategory}&sort=${sortValue}&page=${currentPage}&limit=${pageLimit}`;
 
   let products;
+
   if ((searchedText || treeCategory) && sortValue) {
     const { data } = useGetSearchedProductsQuery(searchAndQuery);
     // console.log(data);
@@ -29,9 +30,15 @@ const AllProductContainer = () => {
     // console.log(products);
   } else if (sortValue) {
     const { data } = useGetSearchedProductsQuery(
-      `sort=${sortValue}&page=${currentPage}&limit=${pageLimit}`
+      `sort=${sortValue}&page=${currentPage}`
     );
     // console.log(data);
+    products = data?.data;
+  } else if (treeCategory) {
+    // console.log(treeCategory);
+    const { data } = useGetSearchedProductsQuery(
+      `category=${treeCategory}&page=${currentPage}&limit=${pageLimit}`
+    );
     products = data?.data;
   } else {
     // const { data } = useGetAllProductsQuery();

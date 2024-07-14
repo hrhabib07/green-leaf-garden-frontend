@@ -1,20 +1,23 @@
+import { Toaster } from "sonner";
 import "./App.css";
-import Footer from "./components/footer/Footer";
-import Navbar from "./components/navbar/navbar";
-import ProductContainer from "./components/product/ProductContainer";
-import TopBanner from "./components/TopBanner/TopBanner";
+import { Provider } from "react-redux";
+import { RouterProvider } from "react-router-dom";
+import { store } from "./redux/store";
+import { router } from "./routes/routes";
+import useBeforeUnloadWarning from "./hooks/useBeforeUnloadWarning";
 function App() {
+  useBeforeUnloadWarning(
+    "Warning: Your cart will be cleared if you refresh the page."
+  );
+
   return (
     <div className="">
-      <Navbar></Navbar>
-      <TopBanner></TopBanner>
-      {/* <div>{data}</div> */}
-      <ProductContainer></ProductContainer>
-      <Footer></Footer>
+      <Toaster></Toaster>
+      <Provider store={store}>
+        <RouterProvider router={router}></RouterProvider>
+      </Provider>
     </div>
   );
 }
-
-// background color: #fcfcfc
 
 export default App;

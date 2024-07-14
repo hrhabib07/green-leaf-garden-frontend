@@ -28,11 +28,22 @@ const ProductContainer = () => {
     // console.log(data);
     products = data?.data;
     // console.log(products);
+  } else if (searchedText && treeCategory) {
+    const { data } = useGetSearchedProductsQuery(
+      `category=${treeCategory}&sort=${sortValue}&page=${currentPage}`
+    );
+    // console.log(data);
+    products = data?.data;
   } else if (sortValue) {
     const { data } = useGetSearchedProductsQuery(
       `sort=${sortValue}&page=${currentPage}`
     );
     // console.log(data);
+    products = data?.data;
+  } else if (treeCategory) {
+    const { data } = useGetSearchedProductsQuery(
+      `category=${treeCategory}&page=${currentPage}`
+    );
     products = data?.data;
   } else {
     // const { data } = useGetAllProductsQuery();

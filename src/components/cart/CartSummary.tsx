@@ -1,6 +1,5 @@
-import { toast } from "sonner";
 import { useAppSelector } from "../../redux/hooks";
-import OrderPlacementModal from "./orderPlacementModal";
+import { NavLink } from "react-router-dom";
 
 const CartSummary = () => {
   const cart = useAppSelector((state) => state.cart);
@@ -28,11 +27,15 @@ const CartSummary = () => {
         <span>{totalQuantity}</span>
       </div>
       <button
-        onClick={() => document.getElementById("my_modal_3").showModal()}
-        className="btn bg-green-950 text-white my-2  hover:bg-white hover:text-green-950"
+        // onClick={() => document.getElementById("my_modal_7").showModal()}
+        className={`btn bg-green-950 text-white my-2  hover:bg-white hover:text-green-950  ${
+          totalQuantity === 0 && "btn-disabled"
+        }`}
       >
-        <span className="uppercase">Place Order</span>
-        <OrderPlacementModal></OrderPlacementModal>
+        <NavLink to={"/order-summary"}>
+          <span className="uppercase">Place Order</span>
+        </NavLink>
+        {/* <OrderPlacementModal order={cart}></OrderPlacementModal> */}
       </button>
     </div>
   );

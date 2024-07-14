@@ -36,8 +36,11 @@ export const cartSlice = createSlice({
         toast.error("You can not order zero item.");
       }
     },
+    clearTheCart: (state) => {
+      return [];
+    },
   },
 });
 
-export const { addToCart, removeFromCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearTheCart } = cartSlice.actions;
 export default cartSlice.reducer;
