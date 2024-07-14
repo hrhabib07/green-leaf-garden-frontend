@@ -4,7 +4,7 @@ const CategoryDashboardHeader = () => {
   const handleModalOpen = () => {
     // () => document.getElementById("my_modal_2").showModal();
     const modal = document.getElementById("my_modal_2") as HTMLDialogElement;
-    modal?.close();
+    modal?.showModal();
   };
   return (
     <div className="h-full bg-gray-50 py-4">
@@ -27,7 +27,11 @@ const CategoryDashboardHeader = () => {
           </div>
         </div>
         <div className="flex-1 w-full flex items-center justify-end">
-          <img width={"50%"} src="/src/assets/adminIcon.png" alt="" />
+          <img
+            width={"50%"}
+            src="https://i.ibb.co/GMvvYqN/admin-Icon.png"
+            alt=""
+          />
         </div>
       </div>
     </div>

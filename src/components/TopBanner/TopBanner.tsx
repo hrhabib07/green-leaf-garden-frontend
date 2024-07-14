@@ -42,8 +42,12 @@ const TopBanner = () => {
             </div>
           </div>
         </div>
-        <div className="">
-          <img src="/src/assets/banner.png" alt="" />
+        <div className="w-96">
+          <img
+            src="https://i.ibb.co/7SgwX35/banner.png"
+            className="w-full"
+            alt=""
+          />
         </div>
       </div>
     </div>

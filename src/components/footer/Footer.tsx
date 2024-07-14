@@ -66,8 +66,8 @@ const Footer = () => {
           </div>
           <div className="flex-1 flex items-center justify-center">
             <img
-              src="/src/assets/logo/logo-without-bg-green.png"
-              className="w-48 lg:w-60"
+              src="https://i.ibb.co/WxwBRrz/logo-without-bg-green.png"
+              className="w-full"
               alt="Company Logo"
             />
           </div>
