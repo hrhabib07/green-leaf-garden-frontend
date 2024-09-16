@@ -5,7 +5,7 @@ import {
 } from "../../redux/api/baseApi";
 import Product from "./Product";
 import SearchAndFilterBar from "../searchAndFilter/SearchAndFilterBar";
-import { Key, SetStateAction, useState } from "react";
+import { Key, SetStateAction, Suspense, useState } from "react";
 import Pagination from "../searchAndFilter/Pagination";
 
 const ProductContainer = () => {
@@ -31,49 +31,6 @@ const ProductContainer = () => {
   // Fetch the products based on the query parameters
   const { data } = useGetSearchedProductsQuery(queryParams);
   const products = data?.data || allProducts;
-  // const [searchedText, setSearchedText] = useState("");
-  // const [treeCategory, setTreeCategory] = useState("");
-  // const [sortValue, setSortValue] = useState("");
-  // const [currentPage, setCurrentPage] = useState(1);
-
-  // const { data } = useGetAllProductsQuery();
-  // const allProducts = data?.data;
-  // // console.log("all", allProducts);
-
-  // const pageLimit = 3;
-
-  // const searchAndQuery = `searchTerm=${searchedText}&category=${treeCategory}&sort=${sortValue}&page=${currentPage}`;
-
-  // let products;
-  // if ((searchedText || treeCategory) && sortValue) {
-  //   const { data } = useGetSearchedProductsQuery(searchAndQuery);
-  //   // console.log(data);
-  //   products = data?.data;
-  //   // console.log(products);
-  // } else if (searchedText && treeCategory) {
-  //   const { data } = useGetSearchedProductsQuery(
-  //     `category=${treeCategory}&sort=${sortValue}&page=${currentPage}`
-  //   );
-  //   // console.log(data);
-  //   products = data?.data;
-  // } else if (sortValue) {
-  //   const { data } = useGetSearchedProductsQuery(
-  //     `sort=${sortValue}&page=${currentPage}`
-  //   );
-  //   // console.log(data);
-  //   products = data?.data;
-  // } else if (treeCategory) {
-  //   const { data } = useGetSearchedProductsQuery(
-  //     `category=${treeCategory}&page=${currentPage}`
-  //   );
-  //   products = data?.data;
-  // } else {
-  //   // const { data } = useGetAllProductsQuery();
-  //   const { data } = useGetSearchedProductsQuery(
-  //     `sort=${sortValue}&page=${currentPage}&limit=${pageLimit}`
-  //   );
-  //   products = data?.data;
-  // }
 
   const totalPages = Math.ceil(allProducts?.length / pageLimit);
   const handleChangePage = (newPage: SetStateAction<number>) => {
@@ -108,11 +65,19 @@ const ProductContainer = () => {
           </p>
         )}
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {products?.map((item: { _id: Key | null | undefined }) => (
-          <Product product={item} key={item._id}></Product>
-        ))}
-      </div>
+      <Suspense
+        fallback={
+          <p className="text-xl font-bold text-center animate-pulse">
+            Loading...
+          </p>
+        }
+      >
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {products?.map((item: { _id: Key | null | undefined }) => (
+            <Product product={item} key={item._id}></Product>
+          ))}
+        </div>
+      </Suspense>
       <div className="my-8">
         <Pagination
           currentPage={currentPage}
