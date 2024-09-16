@@ -49,7 +49,6 @@ Green Leaf Garden is an online nursery platform built with React, Redux, Tailwin
 
 - **Frontend**: React, Redux, TypeScript, Tailwind CSS
 - **Backend**: Node.js, Express.js
-- **Payment**: Stripe.js integration
 
 ## State Management
 
