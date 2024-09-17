@@ -11,7 +11,7 @@ const AllCategories = () => {
 
   const handleEditCategory = (category: SetStateAction<null>) => {
     setSelectedCategory(category);
-    const modal = document.getElementById("my_modal_1") as HTMLDialogElement;
+    const modal = document.getElementById("my_modal_99") as HTMLDialogElement;
     modal?.showModal();
   };
 

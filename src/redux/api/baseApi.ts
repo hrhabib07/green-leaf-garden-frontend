@@ -7,15 +7,13 @@ export const baseApi = createApi({
     baseUrl: "http://localhost:5000/api/v1",
     // baseUrl: "https://grean-leaf-garden-backend.vercel.app/api/v1",
   }),
-  tagTypes: ["product"],
+  tagTypes: ["product", "category"],
   endpoints: (builder) => ({
     getAllProducts: builder.query({
       query: () => "products",
       providesTags: ["product"],
     }),
-    getAllCategories: builder.query({
-      query: () => "categories",
-    }),
+
     getSearchedProducts: builder.query({
       query: (searchTerm) => `products?${searchTerm}`,
     }),
@@ -32,6 +30,7 @@ export const baseApi = createApi({
       }),
       invalidatesTags: ["product"],
     }),
+
     createProduct: builder.mutation({
       query: ({ ...product }) => ({
         url: `products/create-product`,
@@ -56,6 +55,19 @@ export const baseApi = createApi({
       }),
       invalidatesTags: ["product"],
     }),
+
+    getAllCategories: builder.query({
+      query: () => "categories",
+      providesTags: ["category"],
+    }),
+    updateCategory: builder.mutation({
+      query: ({ id, ...category }) => ({
+        url: `categories/${id}`,
+        method: "PUT",
+        body: category,
+      }),
+      invalidatesTags: ["category"],
+    }),
   }),
 });
 
@@ -68,4 +80,5 @@ export const {
   useCreateProductMutation,
   useDeleteProductMutation,
   useGetAllCategoriesQuery,
+  useUpdateCategoryMutation,
 }: any = baseApi;
