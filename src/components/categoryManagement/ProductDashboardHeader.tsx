@@ -16,9 +16,9 @@ const CategoryManagementDashboardHeader = () => {
               Welcome to
             </p>
             <h2 className="text-green-950 font-semibold text-5xl uppercase">
-              Category Management Dashboard
+              Product Management Dashboard
             </h2>
-            <p className="my-2 text-gray-500">
+            <p className="my-2 text-xl text-gray-500">
               Manage your product inventory effortlessly.
             </p>
             <div onClick={handleModalOpen} className="h-6">
@@ -28,8 +28,8 @@ const CategoryManagementDashboardHeader = () => {
         </div>
         <div className="flex-1 w-full flex items-center justify-end">
           <img
-            width={"50%"}
-            src="https://i.ibb.co/GMvvYqN/admin-Icon.png"
+            // width={"50%"}
+            src="https://img.freepik.com/premium-vector/people-working-concept-illustration_958800-115543.jpg?w=826"
             alt=""
           />
         </div>

@@ -60,6 +60,14 @@ export const baseApi = createApi({
       query: () => "categories",
       providesTags: ["category"],
     }),
+    createCategory: builder.mutation({
+      query: ({ ...category }) => ({
+        url: `categories/create-category`,
+        method: "POST",
+        body: category,
+      }),
+      invalidatesTags: ["category"],
+    }),
     updateCategory: builder.mutation({
       query: ({ id, ...category }) => ({
         url: `categories/${id}`,
@@ -80,5 +88,6 @@ export const {
   useCreateProductMutation,
   useDeleteProductMutation,
   useGetAllCategoriesQuery,
+  useCreateCategoryMutation,
   useUpdateCategoryMutation,
 }: any = baseApi;
