@@ -1,6 +1,6 @@
 import AddProductModal from "./AddProductModal";
 
-const CategoryDashboardHeader = () => {
+const CategoryManagementDashboardHeader = () => {
   const handleModalOpen = () => {
     // () => document.getElementById("my_modal_2").showModal();
     const modal = document.getElementById("my_modal_2") as HTMLDialogElement;
@@ -38,4 +38,4 @@ const CategoryDashboardHeader = () => {
   );
 };
 
-export default CategoryDashboardHeader;
+export default CategoryManagementDashboardHeader;

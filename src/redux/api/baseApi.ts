@@ -4,13 +4,17 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://grean-leaf-garden-backend.vercel.app/api/v1",
+    baseUrl: "http://localhost:5000/api/v1",
+    // baseUrl: "https://grean-leaf-garden-backend.vercel.app/api/v1",
   }),
   tagTypes: ["product"],
   endpoints: (builder) => ({
     getAllProducts: builder.query({
       query: () => "products",
       providesTags: ["product"],
+    }),
+    getAllCategories: builder.query({
+      query: () => "categories",
     }),
     getSearchedProducts: builder.query({
       query: (searchTerm) => `products?${searchTerm}`,
@@ -63,4 +67,5 @@ export const {
   useCreateOrderMutation,
   useCreateProductMutation,
   useDeleteProductMutation,
+  useGetAllCategoriesQuery,
 }: any = baseApi;

@@ -15,7 +15,7 @@ const ImageGallery = () => {
         </h1>
         <p className="text-2xl text-gray-500">Here is my product gallery! </p>
       </div>
-      <div className="grid grid-cols-6 gap-4 p-4">
+      <div className="grid grid-cols-6 gap-1 p-4">
         {products.slice(0, 9).map((product: any, index: number) => {
           const getColSpan = () => (index % 3 === 0 ? 2 : 1); // Dynamic column span logic
           const getRowSpan = () => (index % 5 === 0 ? 2 : 1); // Dynamic row span logic
@@ -23,7 +23,7 @@ const ImageGallery = () => {
           return (
             <div
               key={product._id}
-              className={`col-span-${getColSpan()} row-span-${getRowSpan()} overflow-hidden rounded-lg`}
+              className={`col-span-${getColSpan()} row-span-${getRowSpan()} overflow-hidden`}
             >
               <img
                 src={product.image}
