@@ -1,48 +1,67 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import { SetStateAction, useState } from "react";
-import { useGetAllProductsQuery } from "../../redux/api/baseApi";
+import { useState } from "react";
 import ProductTable from "./ProductTable";
-import ProductUpdateModal from "./ProductUpdateModal";
+import SearchAndFilterBar from "../searchAndFilter/SearchAndFilterBar";
 
-const CategoryManagement = () => {
-  const { data } = useGetAllProductsQuery();
-  const products = data?.data;
+const CategoryManagement = ({ products }: any) => {
+  const [searchedText, setSearchedText] = useState("");
+  const [treeCategory, setTreeCategory] = useState("");
+  const [sortValue, setSortValue] = useState("");
 
-  const [selectedProduct, setSelectedProduct] = useState(null);
-
-  const handleEditProduct = (product: SetStateAction<null>) => {
-    setSelectedProduct(product);
-    // document?.getElementById("my_modal_1")?.showModal();
-    const modal = document.getElementById("my_modal_1") as HTMLDialogElement;
-    modal?.showModal();
+  const handleEditProduct = (product: any) => {
+    // Handle product edit
+    console.log("Editing product:", product);
   };
 
+  // Filter and sort products based on the search, category, and sorting
+  const filteredProducts = products
+    ?.filter((product: any) =>
+      product.title.toLowerCase().includes(searchedText.toLowerCase())
+    )
+    ?.filter((product: any) =>
+      treeCategory ? product.category === treeCategory : true
+    )
+    .sort((a: any, b: any) => {
+      if (!sortValue) return 0;
+      const isAscending = sortValue[0] !== "-";
+      const field = isAscending ? sortValue : sortValue.slice(1);
+
+      if (a[field] < b[field]) return isAscending ? -1 : 1;
+      if (a[field] > b[field]) return isAscending ? 1 : -1;
+      return 0;
+    });
+
   return (
-    <div className="overflow-x-auto my-8">
-      <table className="table table-zebra">
-        {/* head */}
+    <div>
+      <SearchAndFilterBar
+        setSearchedText={setSearchedText}
+        setTreeCategory={setTreeCategory}
+        treeCategory={treeCategory}
+        setSortValue={setSortValue}
+        sortValue={sortValue}
+      />
+      <table className="table-auto w-full">
         <thead>
           <tr>
-            <th></th>
+            <th>Rank</th>
             <th>Title</th>
             <th>Description</th>
             <th>Price</th>
             <th>Stock</th>
+            <th>Category</th> {/* New Category column */}
             <th>Manage</th>
           </tr>
         </thead>
         <tbody>
-          {products?.map((item: any, index: any) => (
+          {filteredProducts?.map((product: any, index: number) => (
             <ProductTable
-              key={index}
-              product={item}
+              key={product._id}
+              product={product}
               rank={index + 1}
               onEditProduct={handleEditProduct}
             />
           ))}
         </tbody>
       </table>
-      {selectedProduct && <ProductUpdateModal product={selectedProduct} />}
     </div>
   );
 };
