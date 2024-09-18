@@ -1,7 +1,7 @@
 import { useState } from "react";
 import ProductTable from "./ProductTable";
-import SearchAndFilterBar from "../searchAndFilter/SearchAndFilterBar";
 import ProductUpdateModal from "./ProductUpdateModal"; // Import the modal
+import ManagementSearchBar from "../searchAndFilter/ManagementSerachBar";
 
 const CategoryManagement = ({ productsData }: any) => {
   const products = productsData?.data;
@@ -35,27 +35,9 @@ const CategoryManagement = ({ productsData }: any) => {
       return 0;
     });
 
-  // // Filter and sort products based on search, category, and sorting
-  // const filteredProducts = products
-  //   ?.filter((product: any) =>
-  //     product.title.toLowerCase().includes(searchedText.toLowerCase())
-  //   )
-  //   ?.filter((product: any) =>
-  //     treeCategory ? product.category === treeCategory : true
-  //   )
-  //   .sort((a: any, b: any) => {
-  //     if (!sortValue) return 0;
-  //     const isAscending = sortValue[0] !== "-";
-  //     const field = isAscending ? sortValue : sortValue.slice(1);
-
-  //     if (a[field] < b[field]) return isAscending ? -1 : 1;
-  //     if (a[field] > b[field]) return isAscending ? 1 : -1;
-  //     return 0;
-  //   });
-
   return (
     <div>
-      <SearchAndFilterBar
+      <ManagementSearchBar
         setSearchedText={setSearchedText}
         setTreeCategory={setTreeCategory}
         treeCategory={treeCategory}

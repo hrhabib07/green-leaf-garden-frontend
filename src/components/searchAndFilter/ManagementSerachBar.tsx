@@ -1,12 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SetStateAction, useState } from "react";
+import { useGetAllCategoriesQuery } from "../../redux/api/baseApi";
 
-const SearchAndFilterBar = ({
+const ManagementSearchBar = ({
   setSearchedText,
+  setTreeCategory,
+  treeCategory,
   setSortValue,
   sortValue,
 }: any) => {
+  const { data: category } = useGetAllCategoriesQuery();
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleCategoryChange = (event: { target: { value: string } }) => {
+    setTreeCategory(event.target.value);
+  };
 
   const handleSortChange = (event: { target: { value: string } }) => {
     setSortValue(event.target.value);
@@ -24,17 +32,16 @@ const SearchAndFilterBar = ({
   };
 
   return (
-    <div className="flex items-center justify-between gap-4 my-4 p-4 bg-gray-50 rounded-lg shadow">
-      {/* Sort options (left side) */}
-      <div className="flex items-center space-x-4">
-        <span className="text-lg font-medium">Sort By:</span>
+    <div className="flex my-2">
+      <div className="flex-1 flex items-center">
+        <div className="mr-2">Sort :</div>
         <select
-          className="select select-bordered w-48"
+          className="select select-bordered w-full max-w-xs"
           onChange={handleSortChange}
           value={sortValue}
         >
           <option value="" disabled>
-            Select Sorting Option
+            Sort product
           </option>
           <option value="-price">Price (highest first)</option>
           <option value="price">Price (lowest first)</option>
@@ -43,24 +50,43 @@ const SearchAndFilterBar = ({
         </select>
       </div>
 
-      {/* Search bar (right side) */}
-      <div className="flex items-center space-x-2">
-        <form className="flex items-center" onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Search products..."
-            value={searchTerm}
-            onChange={handleInputChange}
-            className="input input-bordered w-full max-w-xs"
-          />
-          <button type="submit" className="btn ml-2">
+      <div className="flex-1">
+        <span>Filter: </span>
+        <select
+          className="select select-bordered w-full max-w-xs"
+          onChange={handleCategoryChange}
+          value={treeCategory}
+        >
+          <option value="" disabled>
+            Filter by category
+          </option>
+          {category?.data?.map((cat: any) => (
+            <option key={cat._id} value={cat._id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
+      </div>
+
+      <div className="flex-1 navbar-end w-full">
+        <form className="form-control flex flex-row" onSubmit={handleSubmit}>
+          <div className="mr-2">
+            <input
+              type="text"
+              placeholder="Search"
+              value={searchTerm}
+              onChange={handleInputChange}
+              className="input input-bordered w-24 md:w-auto"
+            />
+          </div>
+          <button type="submit" className="flex ml-4 btn">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
               strokeWidth={1.5}
               stroke="currentColor"
-              className="h-6 w-6"
+              className="size-6"
             >
               <path
                 strokeLinecap="round"
@@ -75,4 +101,4 @@ const SearchAndFilterBar = ({
   );
 };
 
-export default SearchAndFilterBar;
+export default ManagementSearchBar;
