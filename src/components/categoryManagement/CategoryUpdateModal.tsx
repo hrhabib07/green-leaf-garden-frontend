@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useUpdateCategoryMutation } from "../../redux/api/baseApi";
 
 const CategoryUpdateModal = ({ category }: any) => {
