@@ -6,14 +6,13 @@ import Navbar from "../components/navbar/navbar";
 import { useGetAllProductsQuery } from "../redux/api/baseApi";
 
 const ProductManagement = () => {
-  const { data } = useGetAllProductsQuery();
-  const products = data?.data;
+  const { data: products } = useGetAllProductsQuery();
 
   return (
     <div className="max-w-7xl mx-auto">
       <Navbar></Navbar>
       <CategoryManagementDashboardHeader></CategoryManagementDashboardHeader>
-      <CategoryManagement products={products}></CategoryManagement>
+      <CategoryManagement productsData={products}></CategoryManagement>
       <AllCategories></AllCategories>
       <Footer></Footer>
     </div>

@@ -1,12 +1,9 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState, useEffect } from "react";
 import { useUpdateProductMutation } from "../../redux/api/baseApi";
 
 const ProductUpdateModal = ({ product }: any) => {
   const [treeCategory, setTreeCategory] = useState(product.category);
-  const handleCategoryChange = (event: { target: { value: any } }) => {
-    setTreeCategory(event.target.value);
-  };
+
   const [formState, setFormState] = useState({
     title: "",
     price: "",
@@ -33,6 +30,10 @@ const ProductUpdateModal = ({ product }: any) => {
 
   const [updateProduct] = useUpdateProductMutation();
 
+  const handleCategoryChange = (event: any) => {
+    setTreeCategory(event.target.value);
+  };
+
   const handleChange = (e: any) => {
     const { name, value } = e.target;
     setFormState((prevState) => ({
@@ -49,9 +50,10 @@ const ProductUpdateModal = ({ product }: any) => {
         ...formState,
         category: treeCategory,
       }).unwrap();
-      const modal = document.getElementById("my_modal_1") as HTMLDialogElement;
+
+      // Close the modal after successful update
+      const modal = document.getElementById("my_modal_19") as HTMLDialogElement;
       modal?.close();
-      // document?.getElementById("my_modal_1")?.close(); // Close the modal after successful update
     } catch (error) {
       console.error("Failed to update the product: ", error);
     }
@@ -75,7 +77,7 @@ const ProductUpdateModal = ({ product }: any) => {
   };
 
   return (
-    <dialog id="my_modal_1" className="modal">
+    <dialog id="my_modal_19" className="modal">
       <div className="modal-box">
         <form onSubmit={handleSubmit}>
           {Object.entries(formState).map(([key, value]) => (
@@ -83,35 +85,50 @@ const ProductUpdateModal = ({ product }: any) => {
               {renderInputField(key, value)}
             </div>
           ))}
+
           <div className="text-start">
-            {" "}
             <label htmlFor="category" className="text-lg font-bold">
               Select Category:
             </label>
             <select
               id="category"
               name="category"
-              className="input input-bordered  max-w-xs mx-2"
+              className="input input-bordered max-w-xs mx-2"
               onChange={handleCategoryChange}
               value={treeCategory}
               required
             >
-              <option value={product.category} disabled selected>
+              <option value={product.category?.name} disabled>
+                {product.category?.name || "Select a category"}
+              </option>
+              <option value="fruit">Fruit</option>
+              <option value="flowers">Flowers</option>
+              <option value="shade">Shade</option>
+              {/* <option value={product.category} disabled>
                 {product.category}
               </option>
-              <option value="fruit">fruit</option>
-              <option value="flowers">flowers</option>
-              <option value="shade">shade</option>
+              <option value="fruit">Fruit</option>
+              <option value="flowers">Flowers</option>
+              <option value="shade">Shade</option> */}
             </select>
           </div>
+
           <div className="modal-action">
             <button type="submit" className="btn">
               Save
             </button>
-            <form method="dialog">
-              {/* if there is a button in form, it will close the modal */}
-              <button className="btn">Close</button>
-            </form>
+            <button
+              className="btn"
+              type="button"
+              onClick={() => {
+                const modal = document.getElementById(
+                  "my_modal_19"
+                ) as HTMLDialogElement;
+                modal?.close();
+              }}
+            >
+              Close
+            </button>
           </div>
         </form>
       </div>

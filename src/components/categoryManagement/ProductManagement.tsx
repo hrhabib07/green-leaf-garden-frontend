@@ -1,18 +1,23 @@
 import { useState } from "react";
 import ProductTable from "./ProductTable";
 import SearchAndFilterBar from "../searchAndFilter/SearchAndFilterBar";
+import ProductUpdateModal from "./ProductUpdateModal"; // Import the modal
 
-const CategoryManagement = ({ products }: any) => {
+const CategoryManagement = ({ productsData }: any) => {
+  const products = productsData?.data;
+  // console.log(productsData.data);
   const [searchedText, setSearchedText] = useState("");
   const [treeCategory, setTreeCategory] = useState("");
   const [sortValue, setSortValue] = useState("");
+  const [selectedProduct, setSelectedProduct] = useState(null); // Use selected product for modal
 
   const handleEditProduct = (product: any) => {
-    // Handle product edit
-    console.log("Editing product:", product);
+    setSelectedProduct(product); // Set the selected product
+    const modal = document.getElementById("my_modal_19") as HTMLDialogElement; // Open correct modal
+    modal?.showModal(); // Open the modal
   };
 
-  // Filter and sort products based on the search, category, and sorting
+  // Filter and sort products based on search, category, and sorting
   const filteredProducts = products
     ?.filter((product: any) =>
       product.title.toLowerCase().includes(searchedText.toLowerCase())
@@ -62,6 +67,9 @@ const CategoryManagement = ({ products }: any) => {
           ))}
         </tbody>
       </table>
+
+      {/* Render the modal and pass the selected product */}
+      {selectedProduct && <ProductUpdateModal product={selectedProduct} />}
     </div>
   );
 };

@@ -21,6 +21,7 @@ const CategoryTable = ({ category, rank, onEditCategory }: any) => {
     <tr>
       <td>{rank}</td>
       <td>{category.name}</td>
+      <td>{category._id}</td>
       <td>{new Date(category.createdAt).toLocaleDateString()}</td>
       <td>{category.isDeleted ? "Deleted" : "Active"}</td>
       <div className="flex justify-start items-center gap-0">

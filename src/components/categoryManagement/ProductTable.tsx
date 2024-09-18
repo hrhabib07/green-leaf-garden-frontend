@@ -31,7 +31,7 @@ const ProductTable = ({ product, rank, onEditProduct }: any) => {
       <td>{truncateText(description, 50)}</td> {/* Truncated description */}
       <td>${price}</td>
       <td>{stock}</td>
-      <td>{category}</td> {/* New category column */}
+      <td>{category?.name || "No category"}</td> {/* New category column */}
       <td
         onClick={() => onEditProduct(product)}
         className="btn bg-transparent border-none"

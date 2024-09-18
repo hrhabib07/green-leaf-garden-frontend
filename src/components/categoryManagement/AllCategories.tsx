@@ -54,6 +54,7 @@ const AllCategories = () => {
           <tr>
             <th></th>
             <th>Category Name</th>
+            <th>Id</th>
             <th>Created At</th>
             <th>Status</th>
             <th>Manage</th>
