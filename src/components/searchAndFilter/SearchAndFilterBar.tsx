@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { SetStateAction, useState } from "react";
+import { useGetAllCategoriesQuery } from "../../redux/api/baseApi";
 
 const SearchAndFilterBar = ({
   setSearchedText,
@@ -8,11 +9,14 @@ const SearchAndFilterBar = ({
   setSortValue,
   sortValue,
 }: any) => {
+  const { data: category } = useGetAllCategoriesQuery();
   const [searchTerm, setSearchTerm] = useState("");
-  const handleCategoryChange = (event: { target: { value: any } }) => {
+
+  const handleCategoryChange = (event: { target: { value: string } }) => {
     setTreeCategory(event.target.value);
   };
-  const handleSortChange = (event: { target: { value: any } }) => {
+
+  const handleSortChange = (event: { target: { value: string } }) => {
     setSortValue(event.target.value);
   };
 
@@ -24,28 +28,28 @@ const SearchAndFilterBar = ({
 
   const handleSubmit = (event: { preventDefault: () => void }) => {
     event.preventDefault();
-
     setSearchedText(searchTerm);
   };
+
   return (
     <div className="flex my-2">
       <div className="flex-1 flex items-center">
         <div className="mr-2">Sort :</div>
         <select
-          className="select  select-bordered w-full max-w-xs"
+          className="select select-bordered w-full max-w-xs"
           onChange={handleSortChange}
           value={sortValue}
         >
-          <option value="" disabled selected>
+          <option value="" disabled>
             Sort product
           </option>
           <option value="-price">Price (highest first)</option>
           <option value="price">Price (lowest first)</option>
           <option value="-rating">Rating (highest first)</option>
           <option value="rating">Rating (lowest first)</option>
-          {/* <option value="shade">Shade Trees</option> */}
         </select>
       </div>
+
       <div className="flex-1">
         <span>Filter: </span>
         <select
@@ -53,14 +57,17 @@ const SearchAndFilterBar = ({
           onChange={handleCategoryChange}
           value={treeCategory}
         >
-          <option value="" disabled selected>
+          <option value="" disabled>
             Filter by category
           </option>
-          <option value="fruit">Fruit Trees </option>
-          <option value="flowers">Flowers Trees</option>
-          <option value="shade">Shade Trees</option>
+          {category?.data?.map((cat: any) => (
+            <option key={cat._id} value={cat._id}>
+              {cat.name}
+            </option>
+          ))}
         </select>
       </div>
+
       <div className="flex-1 navbar-end w-full">
         <form className="form-control flex flex-row" onSubmit={handleSubmit}>
           <div className="mr-2">
@@ -72,7 +79,7 @@ const SearchAndFilterBar = ({
               className="input input-bordered w-24 md:w-auto"
             />
           </div>
-          <button type="submit" className="flex ml-4 btn ">
+          <button type="submit" className="flex ml-4 btn">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

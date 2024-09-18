@@ -5,6 +5,7 @@ import ProductUpdateModal from "./ProductUpdateModal"; // Import the modal
 
 const CategoryManagement = ({ productsData }: any) => {
   const products = productsData?.data;
+  // console.log(category?.data);
   // console.log(productsData.data);
   const [searchedText, setSearchedText] = useState("");
   const [treeCategory, setTreeCategory] = useState("");
@@ -17,13 +18,12 @@ const CategoryManagement = ({ productsData }: any) => {
     modal?.showModal(); // Open the modal
   };
 
-  // Filter and sort products based on search, category, and sorting
   const filteredProducts = products
     ?.filter((product: any) =>
       product.title.toLowerCase().includes(searchedText.toLowerCase())
     )
     ?.filter((product: any) =>
-      treeCategory ? product.category === treeCategory : true
+      treeCategory ? product?.category?._id === treeCategory : true
     )
     .sort((a: any, b: any) => {
       if (!sortValue) return 0;
@@ -34,6 +34,24 @@ const CategoryManagement = ({ productsData }: any) => {
       if (a[field] > b[field]) return isAscending ? 1 : -1;
       return 0;
     });
+
+  // // Filter and sort products based on search, category, and sorting
+  // const filteredProducts = products
+  //   ?.filter((product: any) =>
+  //     product.title.toLowerCase().includes(searchedText.toLowerCase())
+  //   )
+  //   ?.filter((product: any) =>
+  //     treeCategory ? product.category === treeCategory : true
+  //   )
+  //   .sort((a: any, b: any) => {
+  //     if (!sortValue) return 0;
+  //     const isAscending = sortValue[0] !== "-";
+  //     const field = isAscending ? sortValue : sortValue.slice(1);
+
+  //     if (a[field] < b[field]) return isAscending ? -1 : 1;
+  //     if (a[field] > b[field]) return isAscending ? 1 : -1;
+  //     return 0;
+  //   });
 
   return (
     <div>
@@ -59,7 +77,7 @@ const CategoryManagement = ({ productsData }: any) => {
         <tbody>
           {filteredProducts?.map((product: any, index: number) => (
             <ProductTable
-              key={product._id}
+              key={product?._id}
               product={product}
               rank={index + 1}
               onEditProduct={handleEditProduct}
