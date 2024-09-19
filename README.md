@@ -6,10 +6,6 @@ Live Site: [Green Leaf Garden](https://green-garden-frontend.vercel.app/)
 
 Green Leaf Garden is an online nursery platform built with React, Redux, Tailwind CSS, and TypeScript. It provides users with a seamless experience to browse, search, and manage nursery products. The platform also includes secure online payment through Stripe and provides a clean user interface for product management.
 
-## Project Information - first version
-
-- **Completion Date**: July 14, 2024
-
 ## Features
 
 ### Public Routes
@@ -69,3 +65,7 @@ Green Leaf Garden is an online nursery platform built with React, Redux, Tailwin
 3. Run the development server with `npm run dev`
 
 This project is developed for educational purposes as part of learning web development using modern technologies.
+
+## Project Information - first version
+
+- **Completion Date**: July 14, 2024
