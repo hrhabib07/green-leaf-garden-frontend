@@ -14,7 +14,7 @@ interface Product {
   _id: string;
   title: string;
   price: number;
-  category: string;
+  category: any;
   description: string;
   rating: number;
   image: string;
@@ -29,7 +29,7 @@ const ProductDetails: React.FC = () => {
 
   // console.log("product", product);
   const [stock, setStock] = useState(data?.data?.stock);
-  console.log("stock", stock);
+  // console.log("stock", stock);
   const dispatach = useDispatch();
   const [updateProduct] = useUpdateProductMutation();
   const handleAddToCart = async () => {
@@ -60,7 +60,7 @@ const ProductDetails: React.FC = () => {
             <img
               src={product.image}
               alt={product.title}
-              className="w-full rounded-lg shadow-md"
+              className="w-[300px] h-[300px] rounded-lg shadow-md"
             />
           </div>
           <div className="md:ml-8 mt-4 md:mt-0 text-left">
@@ -68,7 +68,7 @@ const ProductDetails: React.FC = () => {
               {product.title}
             </h1>
             <p className="text-xl text-gray-500 mb-2">
-              Category: {product.category}
+              Category: {product?.category?.name || "no category"}
             </p>
             <p className="text-lg text-gray-700 mb-4">{product.description}</p>
             <p className="text-2xl font-bold text-green-950 mb-4">

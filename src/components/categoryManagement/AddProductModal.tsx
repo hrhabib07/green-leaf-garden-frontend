@@ -1,13 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { useCreateProductMutation } from "../../redux/api/baseApi";
+import {
+  useCreateProductMutation,
+  useGetAllCategoriesQuery,
+} from "../../redux/api/baseApi";
 import { toast } from "sonner";
 
+interface Error {
+  path: string;
+  message: string;
+}
 const AddProductModal = () => {
-  interface Error {
-    path: string;
-    message: string;
-  }
+  const { data: category } = useGetAllCategoriesQuery();
   const [errors, setErrors] = useState<Error[]>([]);
   const [treeCategory, setTreeCategory] = useState([]);
 
@@ -107,7 +111,27 @@ const AddProductModal = () => {
               <label htmlFor="category" className="text-lg font-bold">
                 Select Category
               </label>
-              <select
+              <div className="flex-1">
+                <span>Filter: </span>
+                <select
+                  id="category"
+                  name="category"
+                  className="select select-bordered w-full max-w-xs"
+                  onChange={handleCategoryChange}
+                  value={treeCategory}
+                  required
+                >
+                  <option value="" disabled>
+                    Filter by category
+                  </option>
+                  {category?.data?.map((cat: any) => (
+                    <option key={cat._id} value={cat._id}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              {/* <select
                 id="category"
                 name="category"
                 className="input input-bordered  max-w-xs mx-2"
@@ -121,7 +145,7 @@ const AddProductModal = () => {
                 <option value="fruit">Fruit Trees </option>
                 <option value="flowers">Flowers Trees</option>
                 <option value="shade">Shade Trees</option>
-              </select>
+              </select> */}
             </div>
             {errors && (
               <div>

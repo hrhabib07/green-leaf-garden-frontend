@@ -1,9 +1,13 @@
 import { useState, useEffect } from "react";
-import { useUpdateProductMutation } from "../../redux/api/baseApi";
+import {
+  useGetAllCategoriesQuery,
+  useUpdateProductMutation,
+} from "../../redux/api/baseApi";
 
 const ProductUpdateModal = ({ product }: any) => {
   const [treeCategory, setTreeCategory] = useState(product.category);
 
+  const { data: category } = useGetAllCategoriesQuery();
   const [formState, setFormState] = useState({
     title: "",
     price: "",
@@ -90,27 +94,26 @@ const ProductUpdateModal = ({ product }: any) => {
             <label htmlFor="category" className="text-lg font-bold">
               Select Category:
             </label>
-            <select
-              id="category"
-              name="category"
-              className="input input-bordered max-w-xs mx-2"
-              onChange={handleCategoryChange}
-              value={treeCategory}
-              required
-            >
-              <option value={product.category?.name} disabled>
-                {product.category?.name || "Select a category"}
-              </option>
-              <option value="fruit">Fruit</option>
-              <option value="flowers">Flowers</option>
-              <option value="shade">Shade</option>
-              {/* <option value={product.category} disabled>
-                {product.category}
-              </option>
-              <option value="fruit">Fruit</option>
-              <option value="flowers">Flowers</option>
-              <option value="shade">Shade</option> */}
-            </select>
+            <div className="flex-1">
+              <span>Filter: </span>
+              <select
+                id="category"
+                name="category"
+                className="select select-bordered w-full max-w-xs"
+                onChange={handleCategoryChange}
+                value={treeCategory}
+                required
+              >
+                <option value="" disabled>
+                  Filter by category
+                </option>
+                {category?.data?.map((cat: any) => (
+                  <option key={cat._id} value={cat._id}>
+                    {cat.name}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
 
           <div className="modal-action">
